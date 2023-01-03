@@ -1,5 +1,5 @@
 import pandas as pd
-#  
+import numpy as np
 import streamlit as st
 
 df = pd.read_csv('supermarket.csv')
@@ -11,7 +11,7 @@ st.subheader('Table')
 
 # st.write(df.sort_values(by=['store_sales','store_area'], axis=0, ascending=False).iloc[0:5])
 Ascending_list=False
-if st.checkbox('Ascending'):
+if st.checkbox('Worst Performing'):
     Ascending_list=True
 
 option = st.radio('Sort column',options=['items_available','daily_customer_count','store_sales','sales_per_customer'])
@@ -26,3 +26,10 @@ def load_table(nrows=5,sortby='store_sales',data=df,Ascending=False):
 
 number_of_rows=st.slider('rows',5,10,5)
 load_table(nrows=number_of_rows, sortby=option,data=df,Ascending=Ascending_list)
+
+st.subheader('Bar Graph')
+
+
+
+
+st.bar_chart(df.sort_values(by=[option],axis=0, ascending=Ascending_list).iloc[0:number_of_rows],x='store_id', y=option)
